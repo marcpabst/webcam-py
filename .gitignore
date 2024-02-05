@@ -71,5 +71,10 @@ docs/_build/
 # Pyenv
 .python-version
 
-# mp4 files
-*.mp4s
+# video files
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.flv
+*.mkv
