@@ -17,7 +17,7 @@ fn record(
     let source = gst::ElementFactory::make("autovideosrc").build().unwrap();
     let caps_filter = gst::ElementFactory::make("capsfilter").build().unwrap();
     let tee = gst::ElementFactory::make("tee").build().unwrap();
-    // let display_queue = gst::ElementFactory::make("queue").build().unwrap();
+    let display_queue = gst::ElementFactory::make("queue").build().unwrap();
     // let autovideoconvert = gst::ElementFactory::make("autovideoconvert")
     //     .build()
     //     .unwrap();
@@ -49,37 +49,26 @@ fn record(
     pipeline
         .add_many(&[
             &source,
-            //&caps_filter,
-            //&tee,
-            // &display_queue,
-            // &autovideoconvert,
+            &caps_filter,
+            &tee,
+            &display_queue,
             &autovideosink,
-            // &encoder,
-            // &parser,
-            // &queue,
-            // &muxer,
-            // &sink,
+            &encoder,
+            &parser,
+            &queue,
+            &muxer,
+            &sink,
         ])
         .unwrap();
 
     // link the source to the caps filter and the tee
-    //gst::Element::link_many(&[&source, &caps_filter, &tee]);
+    gst::Element::link_many(&[&source, &caps_filter, &tee]).unwrap();
 
-    // link source to autovideosink
-    source.link(&autovideosink).unwrap();
-
-    // // link the display pipeline
-    // gst::Element::link_many(&[
-    //     &source,
-    //     &caps_filter,
-    //     // &display_queue,
-    //     // &autovideoconvert,
-    //     &autovideosink,
-    // ])
-    // .unwrap();
+    // link the display pipeline
+    gst::Element::link_many(&[&tee, &display_queue, &autovideosink]).unwrap();
 
     // link the recording pipeline
-    //gst::Element::link_many(&[&tee, &encoder, &parser, &queue, &muxer, &sink]).unwrap();
+    gst::Element::link_many(&[&tee, &encoder, &parser, &queue, &muxer, &sink]).unwrap();
 
     // Start playing
     pipeline.set_state(gst::State::Playing).unwrap();

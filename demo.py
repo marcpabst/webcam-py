@@ -17,7 +17,7 @@ camera_caps = webcam_py.CameraCaps(
 )
 
 # start recordingß
-recorder = webcam_py.start_recording(camera_caps, "test2.mp4")
+recorder = webcam_py.start_recording(camera_caps, "test23.mp4")
 
 # print 10 000 messages
 for i in range(10):

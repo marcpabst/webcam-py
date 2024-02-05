@@ -70,3 +70,6 @@ docs/_build/
 
 # Pyenv
 .python-version
+
+# mp4 files
+*.mp4s
